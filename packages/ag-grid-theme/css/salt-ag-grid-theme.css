@@ -36,6 +36,7 @@ div[class*="ag-theme-salt"] {
   --ag-popup-shadow: var(--salt-overlayable-shadow-modal);
   --ag-range-selection-background-color: var(--salt-overlayable-rangeSelection);
   --ag-range-selection-border-style: none;
+  --ag-range-selection-highlight-color: var(--salt-overlayable-background-highlight);
   --ag-row-group-indent-size: calc(var(--ag-icon-size) + var(--ag-cell-widget-spacing));
   --ag-row-hover-color: var(--salt-selectable-background-hover);
   --ag-secondary-border-color: var(--salt-separable-tertiary-borderColor);
@@ -150,10 +151,13 @@ div[class*="ag-theme-salt"] .ag-floating-filter input[class^="ag-"][type="number
 }
 
 div[class*="ag-theme-salt"] .ag-header-cell:not(.ag-column-resizing) + .ag-header-cell.ag-column-menu-visible:not(.ag-column-hover):not(.ag-header-cell-moving):hover,
+div[class*="ag-theme-salt"] .ag-header-cell:not(.ag-column-hover):first-of-type:not(.ag-header-cell-moving).ag-column-menu-visible:hover,
 div[class*="ag-theme-salt"] .ag-header-cell.ag-column-menu-visible {
   /* When menu is visible, change bg and fg */
   background: var(--salt-actionable-secondary-background-active);
   color: var(--salt-actionable-secondary-foreground-active);
+  /* Color for menu / filter icons */
+  --ag-icon-font-color: var(--salt-actionable-secondary-foreground-active);
 }
 
 div[class*="ag-theme-salt"] .ag-header-cell.ag-column-menu-visible .ag-icon {
@@ -276,10 +280,10 @@ div[class*="ag-theme-salt"] .editable-cell,
 div[class*="ag-theme-salt"] .editable-numeric-cell {
   outline: var(--salt-size-border) var(--salt-container-borderStyle) var(--salt-editable-borderColor);
   outline-offset: -1px;
-  text-align: right;
 }
 
-div[class*="ag-theme-salt"] .ag-cell.numeric-cell {
+div[class*="ag-theme-salt"] .ag-cell.numeric-cell,
+div[class*="ag-theme-salt"] .editable-numeric-cell {
   text-align: right;
 }
 
