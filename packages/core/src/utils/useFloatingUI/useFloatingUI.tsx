@@ -19,6 +19,7 @@ import {
   createContext,
   forwardRef,
   useContext,
+  useEffect,
   useMemo,
 } from "react";
 import { SaltProvider, SaltProviderNext, useTheme } from "../../salt-provider";
@@ -45,6 +46,10 @@ export interface FloatingComponentProps
   width?: number;
   height?: number;
   position?: Strategy;
+  /**
+   * Disables scrolling the document body while the floating component is open.
+   */
+  disableScroll?: boolean;
 }
 
 const DefaultFloatingComponent = forwardRef<
@@ -59,6 +64,7 @@ const DefaultFloatingComponent = forwardRef<
     width,
     height,
     focusManagerProps,
+    disableScroll,
     ...rest
   } = props;
   const style = {
@@ -70,6 +76,20 @@ const DefaultFloatingComponent = forwardRef<
   const { themeNext } = useTheme();
 
   const ChosenSaltProvider = themeNext ? SaltProviderNext : SaltProvider;
+
+  useEffect(() => {
+    if (!disableScroll) {
+      return;
+    }
+    if (open) {
+      document.documentElement.style.overflow = "hidden";
+    } else {
+      document.documentElement.style.removeProperty("overflow");
+    }
+    return () => {
+      document.documentElement.style.removeProperty("overflow");
+    };
+  }, [disableScroll, open]);
 
   if (focusManagerProps && open) {
     return (
