@@ -1,5 +1,5 @@
 ---
-"@salt-ds/core": patch
+"@salt-ds/core": minor
 ---
 
-Disable background scrolling while Dialog is open.
+Added `disableScroll` prop to FloatingComponent
