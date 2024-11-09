@@ -3,7 +3,7 @@ import { composeStories } from "@storybook/react";
 
 const composedStories = composeStories(dialogStories);
 
-const { Default, Preheader } = composedStories;
+const { Default, Preheader, LongContent } = composedStories;
 
 describe("GIVEN a Dialog", () => {
   describe("WHEN only header is provided", () => {
@@ -196,6 +196,15 @@ describe("GIVEN a Dialog", () => {
 
       cy.findByRole("button", { name: "Cancel" }).realClick();
       cy.document().its("documentElement.style.overflow").should("equal", "");
+    });
+  });
+  describe("WHEN overflowing content is detected", () => {
+    it("THEN it should add padding to the right of the scroll bar", () => {
+      cy.mount(<LongContent style={{ height: 300 }} />);
+      cy.findByRole("button", { name: "Open dialog" }).realClick();
+      cy.findByRole("dialog")
+        .find("div.saltDialogContent-overflow")
+        .should("exist");
     });
   });
 });
