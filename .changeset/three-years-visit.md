@@ -2,4 +2,4 @@
 "@salt-ds/core": minor
 ---
 
-Added `disableScroll` prop to FloatingComponent
+Added `disableScroll` prop to FloatingComponent.
