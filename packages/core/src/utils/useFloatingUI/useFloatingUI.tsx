@@ -13,6 +13,7 @@ import {
   shift,
   useFloating,
 } from "@floating-ui/react";
+import { useWindow } from "@salt-ds/window";
 import {
   type ComponentPropsWithoutRef,
   type ReactNode,
@@ -75,21 +76,23 @@ const DefaultFloatingComponent = forwardRef<
 
   const { themeNext } = useTheme();
 
+  const targetWindow = useWindow();
+
   const ChosenSaltProvider = themeNext ? SaltProviderNext : SaltProvider;
 
   useEffect(() => {
-    if (!disableScroll) {
+    if (!disableScroll || !targetWindow) {
       return;
     }
     if (open) {
-      document.documentElement.style.overflow = "hidden";
+      targetWindow.document.documentElement.style.overflow = "hidden";
     } else {
-      document.documentElement.style.removeProperty("overflow");
+      targetWindow.document.documentElement.style.removeProperty("overflow");
     }
     return () => {
-      document.documentElement.style.removeProperty("overflow");
+      targetWindow.document.documentElement.style.removeProperty("overflow");
     };
-  }, [disableScroll, open]);
+  }, [disableScroll, open, targetWindow]);
 
   if (focusManagerProps && open) {
     return (
